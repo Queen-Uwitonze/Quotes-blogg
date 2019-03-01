@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+<!-- Styles block -->
+{% block styles%}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/index.css')}}">
+{% endblock %}
+{% block content %}
+<div class="container-fluid mt-3" text-align="center">
+
+  <!-- <div class="selectpost">
+
+    <a href="{{url_for('main.pickup_line')}}">Pickup Lines|</a>
+    <a href="{{url_for('main.business')}}">Business |</a>
+    <a href="{{url_for('main.jobs')}}"> Jobs Pitch|</a>
+    <a href="{{url_for('main.promotion')}}">Promotion</a>
+    <hr>
+  </div> -->
+
+
+  {% for post in all_posts%}
+  <div class="postpost">
+    <p class="card-title"><strong>Category:
+      </strong>{{post.title}}</p>
+    <!-- <p class="card-text">{{post.category}}</p> -->
+    <p class="card-text"><strong>Add a post:</strong> {{post.content}}</p>
+    <p class="card-text"><strong>{{post.user}}</strong></p>
+
+    {% for comment in post.comment %}
+    <p>comment:{{comment.description}}</p>
+
+    {%endfor%}
+  </div>
+  <div class="voting_kochi" id="1012">
+    <div class="voting_btn">
+
+      <p><a href='/comment/new/{{post.id}}'>comment</a></p>
+      <button class="up_button"><a href='/vote'>upvote</a></button>
+      <button class="up_button"><a href='/vote'>downvote</a> </button>
+    </div>
+  </div>
+
+
+  {% endfor %}
+</div>
+{% endblock%}
