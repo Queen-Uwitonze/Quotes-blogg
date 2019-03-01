@@ -1,13 +1,13 @@
-{% macro displayBlog_postList(post_list) %}
-{% for post in post_list %}
+{% macro displayQuoteList(quote_list) %}
+{% for quote in quote_list %}
 <div class="col-xs-6 col-sm-6 col-md-6">
     <div class="card m-2">
-        <div class="card-header">
-            Category - {{post.category}}
-        </div>
+        <!-- <div class="card-header">
+            
+        </div> -->
         <div class="card-body">
-            <h5 class="card-title">{{post.title}}</h5>
-            <p class="card-text">{{post.content}}</p>
+            <h5 class="card-title">{{quote.author}}</h5>
+            <p class="card-text">{{quote.quote}}</p>
 
             <hr>
             <p>Add a comment <a href="/comment/{{post.id}}">here</a>.

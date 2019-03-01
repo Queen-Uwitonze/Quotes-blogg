@@ -6,7 +6,6 @@ class Blog_postForm(FlaskForm):
    
     author = TextAreaField('author', validators=[Required()])
     quote = SubmitField('upvote',validators=[Required()])
-  
     submit = SubmitField('Submit')
 
 class CommentForm(FlaskForm):

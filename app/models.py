@@ -8,31 +8,32 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class Post:
+class Quote:
 
-    all_posts = []
+    all_quotes = []
+
     def __init__(self,id,author,quote,permalink):
         self.id =id
         self.author = author
         self.quote = quote
         self.permalink = "http:\/\/quotes.stormconsultancy.co.uk\/quotes\/38" 
         
-    def save_post(self):
-       Post.all_posts.append(self)
+    def save_quotes(self):
+       Quote.all_quotes.append(self)
 
 
     @classmethod
-    def clear_posts(cls):
-       Post.all_posts.clear()
+    def clear_quotes(cls):
+       Post.all_quotes.clear()
 
     @classmethod
-    def get_posts(cls,id):
+    def get_quotes(cls,id):
 
         response = []
 
-        for Post in cls.all_posts:
-            if Post.movie_id == id:
-                response.append(post)
+        for Quote in cls.all_quotes:
+            if Quote.user_id == id:
+                response.append(quote)
 
         return response
 
@@ -40,7 +41,7 @@ class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255))
-    post = db.relationship('post',backref = 'user',lazy="dynamic")
+    post = db.relationship('Blog_post',backref = 'user',lazy="dynamic")
     comment = db.relationship('Comment',backref = 'user',lazy="dynamic")
     email = db.Column(db.String(255),unique = True,index = True)
     bio = db.Column(db.String(255))
@@ -65,6 +66,7 @@ class User(UserMixin,db.Model):
         
     
 class Blog_post(db.Model):
+
     __tablename__ = 'post'
 
     id = db.Column(db.Integer,primary_key = True)
@@ -73,13 +75,13 @@ class Blog_post(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     comment = db.relationship('Comment',backref = 'post',lazy="dynamic")
 
-    def save_post(self):
+    def save_posts(self):
         db.session.add(self)
         db.session.commit()
-
+ 
     @classmethod
     def get_posts(id):
-        posts = post.query.all()
+        posts = Blog_post.query.all()
         return posts
 
     def __repr__(self):
@@ -96,12 +98,12 @@ class Comment(db.Model):
     def __repr__(self):
         return f'User {self.name}'
 
-    def save_post(self):
+    def save_comments(self):
        db.session.add(self)
        db.session.commit()
      
     @classmethod
-    def get_posts(id):
+    def get_comments(id):
         posts = post.query.all()
         return posts
 

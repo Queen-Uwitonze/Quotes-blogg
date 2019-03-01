@@ -19,8 +19,8 @@ def index():
     # promotion_pitch = get_movies('promotion pitch')
 
     title = 'Home- Welcome'
-    all_posts = Blog_post.get_posts()
-    return render_template('index.html', title = title,all_posts=all_posts)
+    all_quotes = Blog_post.get_posts()
+    return render_template('index.html', title = title,all_quotes=all_quotes)
 
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -76,14 +76,12 @@ def new_post():
     post_form = Blog_postForm()
     
     if post_form.validate_on_submit():
-        title = pitch_form.title.data
-        content  = pitch_form.content.data
-        username  = pitch_form.username.data
-        category = pitch_form.category.data
-        upvote = pitch_form.category.data
-        user_id = pitch_form.user_id.data
-        new_pitch = Pitch(title=title,content=content,category=category,user_id=current_user.id)
-        new_pitch.save_pitch() 
+        # id = post_form.id.data
+        author  = post_form.author.data
+        quote = post_form.quote.data
+        user_id = post_form.user_id.data
+        new_post = Post(author=author,quote=quote,user_id=current_user.id)
+        new_post.save_post() 
     
         return redirect(url_for('main.index'))
 
