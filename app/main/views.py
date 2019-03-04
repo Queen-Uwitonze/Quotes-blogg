@@ -121,7 +121,7 @@ def subscribe():
         db.session.add(subscriber)
         db.session.commit()
 
-        mail_message=("Welcome to my blog","email/welcome_user",subscriber.email)
+        mail_message=("Welcome to my blog","email/welcome_user",subscriber.email,subscriber)
         return redirect(url_for('main.index'))
         title = 'Subscribe'
     return render_template('subscribe.html',form=form)
