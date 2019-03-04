@@ -1,10 +1,10 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from .forms import Blog_postForm,UpdateProfile,CommentForm
-from ..models import  User,Blog_post,Comment
+from .forms import BlogForm,UpdateProfile,CommentForm
+from ..models import  User,Blog,Comment
 from flask_login import login_required,current_user
 from .. import db,photos
-# from .models import pitch
+from ..request import get_quotes
 
 
 # Pitch = pitch.Pitch
@@ -19,8 +19,9 @@ def index():
     # promotion_pitch = get_movies('promotion pitch')
 
     title = 'Home- Welcome'
-    all_quotes = Blog_post.get_posts()
-    return render_template('index.html', title = title,all_quotes=all_quotes)
+    all_blogs = Blog.query.all()
+    quote=get_quotes()
+    return render_template('index.html', title = title,all_blogs=all_blogs, quote= quote)
 
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -72,15 +73,14 @@ def profile(uname):
 
 @main.route('/new', methods=['GET', 'POST'])
 @login_required
-def new_post():
-    post_form = Blog_postForm()
+def new_blog():
+    blog_form = BlogForm()
     
     if post_form.validate_on_submit():
-        # id = post_form.id.data
-        author  = post_form.author.data
-        quote = post_form.quote.data
+        
+        blog = blog_form.blog.data
         user_id = post_form.user_id.data
-        new_post = Post(author=author,quote=quote,user_id=current_user.id)
+        new_post = Post(blog=quote,user_id=current_user.id)
         new_post.save_post() 
     
         return redirect(url_for('main.index'))
@@ -92,11 +92,11 @@ def new_post():
 def comment(id):
     comment_form = CommentForm()
     
-    pitch = Pitch.query.get(id)
+    post= Blog.query.get(id)
 
     if comment_form.validate_on_submit():
         comment = comment_form.comment.data
-        category=category
+        
         new_comment = Comment(comment=comment,user_id=user_id)
         new_comment.save_comment()
         return redirect(url_for('main.index'))

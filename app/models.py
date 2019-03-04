@@ -41,7 +41,7 @@ class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255))
-    post = db.relationship('Blog_post',backref = 'user',lazy="dynamic")
+    post = db.relationship('Blog',backref = 'user',lazy="dynamic")
     comment = db.relationship('Comment',backref = 'user',lazy="dynamic")
     email = db.Column(db.String(255),unique = True,index = True)
     bio = db.Column(db.String(255))
@@ -65,24 +65,23 @@ class User(UserMixin,db.Model):
         return f'User {self.username}'
         
     
-class Blog_post(db.Model):
+class Blog(db.Model):
 
-    __tablename__ = 'post'
+    __tablename__ = 'blogs'
 
     id = db.Column(db.Integer,primary_key = True)
-    author = db.Column(db.String(255))
-    quote = db.Column(db.String(255))
+    blog = db.Column(db.String(255))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    comment = db.relationship('Comment',backref = 'post',lazy="dynamic")
+    comment = db.relationship('Comment',backref = 'blogs',lazy="dynamic")
 
-    def save_posts(self):
+    def save_blogs(self):
         db.session.add(self)
         db.session.commit()
  
     @classmethod
-    def get_posts(id):
-        posts = Blog_post.query.all()
-        return posts
+    def get_blogs(id):
+        blogs = Blog.query.filter_by(id=user_id).all()
+        return blogs
 
     def __repr__(self):
         return f'User {self.name}'
@@ -93,7 +92,7 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     description= db.Column(db.String(255))
-    post_id = db.Column(db.Integer,db.ForeignKey('post.id'))
+    blogs_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     def __repr__(self):
         return f'User {self.name}'
@@ -104,8 +103,8 @@ class Comment(db.Model):
      
     @classmethod
     def get_comments(id):
-        posts = post.query.all()
-        return posts
+       blogs = Blog.query.all()
+       return blogs
 
 
 

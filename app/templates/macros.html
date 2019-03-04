@@ -1,10 +1,10 @@
-{% macro displayQuoteList(quote_list) %}
-{% for quote in quote_list %}
+{% macro displayBrogList(post_list) %}
+{% for post in post_list %}
 <div class="col-xs-6 col-sm-6 col-md-6">
     <div class="card m-2">
-        <!-- <div class="card-header">
-            
-        </div> -->
+        <div class="card-header">
+
+        </div>
         <div class="card-body">
             <h5 class="card-title">{{quote.author}}</h5>
             <p class="card-text">{{quote.quote}}</p>
@@ -18,4 +18,5 @@
         </div>
     </div>
 </div>
-{% endfor %} {% endmacro %}
+{% endfor %}
+{% endmacro %}
