@@ -1,13 +1,8 @@
-{% extends 'base.html' %}
-{% import 'macros.html' as macro %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
 <!-- Styles block -->
 
 {% block content %}
-{% block styles%}
-<link rel="stylesheet" href="{{url_for('static',filename='CSS/index.css')}}">
-<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
-{% endblock %}
 
 <div class="container-fluid container">
   <h1>Welcome to the blogging web app, click here to write a blog &nbsp;<a class="btn btn-primary btn md" href="/new_blog">

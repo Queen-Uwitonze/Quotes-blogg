@@ -73,7 +73,7 @@ class Blog(db.Model):
     blog = db.Column(db.String(255))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     comment = db.relationship('Comment',backref = 'blogs',lazy="dynamic")
-
+    
     def save_blogs(self):
         db.session.add(self)
         db.session.commit()
@@ -107,12 +107,14 @@ class Comment(db.Model):
        return blogs
 
 
-class Subscribe():
+class Subscribe(db.Model):
     __tablename__= 'subscribe'
 
     id = db.Column(db.Integer,primary_key = True)
     email= db.Column(db.String(255))
+    name = db.Column(db.String(255))
 
+    
     def __repr__(self):
         return f'User {self.name}'
 

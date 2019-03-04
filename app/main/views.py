@@ -69,7 +69,7 @@ def profile(uname):
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user=user,pitch_form=pitch_form)
+    return render_template("profile/profile.html", user=user,blog_form=blog_form)
 
 @main.route('/new_blog', methods=['GET', 'POST'])
 @login_required
@@ -110,15 +110,20 @@ def vote():
     output = select_all_items(c, [data['member']])
     pusher.trigger(u'poll', u'vote', output)
     return request.data
-@main.route('/subscribe', methods=['GET', 'POST'])
-def subscribe():
-    subscribe_form = SubscribeForm()
-    
-    
-    if  subscribe_form.validate_on_submit():
-      
-        new_subscriber = Subscribe()
-        new_subscriber.save_subscribe()
-        return redirect(url_for('main.index'))
 
-    return render_template('subscribe.html', subscribe_form= subscribe_form)
+@main.route('/subscribe',methods=["GET","POST"])
+def subscribe():
+    subscribe_form=SubscribeForm()
+
+    if subscribe_form.validate_on_submit():
+       
+        email = subscribe_form.email.data
+        subscriber = Subscribe()
+        db.session.add(subscriber)
+        db.session.commit()
+
+        # mail_message("Welcome to my blog","email/welcome_user",subscriber.email,subscriber=subscriber)
+        return redirect(url_for('main.index'))
+        title = 'Subscribe'
+    return render_template('subscribe.html',subscribe_form=subscribe_form)
+
