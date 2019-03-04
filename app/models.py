@@ -101,10 +101,14 @@ class Comment(db.Model):
        db.session.add(self)
        db.session.commit()
      
+    def delete_comments(self):
+       db.session.add(self)
+       db.session.commit()
+       
     @classmethod
     def get_comments(id):
-       blogs = Blog.query.all()
-       return blogs
+       comments = Comment.query.all()
+       return comments
 
 
 class Subscribe(db.Model):

@@ -98,6 +98,7 @@ def comment(id):
         # user_id = comment_form.user_id.data
         new_comment = Comment(description=description, blogs_id  = id, user_id=current_user.id)
         new_comment.save_comments()
+        new_comment.delete_comments()
         return redirect(url_for('main.index'))
 
     return render_template('comment.html',comment_form=comment_form, blog= blog)
@@ -120,10 +121,9 @@ def subscribe():
     subscribe_form=SubscribeForm()
 
     if subscribe_form.validate_on_submit():
-       
         email = subscribe_form.email.data
         subscriber = Subscribe()
-        db.session.add(subscriber)
+        db.session.save(email)
         db.session.commit()
 
         # mail_message("Welcome to my blog","email/welcome_user",subscriber.email,subscriber=subscriber)
