@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% import 'macros.html' as macro %}
+{% import "bootstrap/wtf.html" as wtf %}
+<!-- Styles block -->
+
+{% block content %}
 {% block styles%}
 <link rel="stylesheet" href="{{url_for('static',filename='CSS/index.css')}}">
 <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
@@ -21,7 +25,7 @@
     <div class="card-deck">
       <div class="card">
         <div class="card-header" style='text-align:center;'>
-          <h5>{{blog.username}}</h5>
+          <h5>{{blog.user}}</h5>
         </div>
         <div class="card-body">
           <p>{{blog.blog}}</p>
@@ -39,3 +43,5 @@
   </div>
 
   {% endfor %}
+  </div>
+  {% endblock%}

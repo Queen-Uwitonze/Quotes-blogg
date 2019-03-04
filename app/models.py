@@ -107,6 +107,23 @@ class Comment(db.Model):
        return blogs
 
 
+class Subscribe():
+    __tablename__= 'subscribe'
+
+    id = db.Column(db.Integer,primary_key = True)
+    email= db.Column(db.String(255))
+
+    def __repr__(self):
+        return f'User {self.name}'
+
+    def save_subscribe(self):
+       db.session.add(self)
+       db.session.commit()
+
+    @classmethod
+    def get_subscribe(id):
+       subscribe = Subscribe.query.all()
+       return subscribe
 
 
 
