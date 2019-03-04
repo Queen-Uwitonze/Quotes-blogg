@@ -87,21 +87,25 @@ def new_blog():
 
     return render_template('new_blog.html', blog_form=blog_form)
 
-@main.route('/comment/new', methods=['GET', 'POST'])
+@main.route('/comment/new/<int:id>', methods=['GET', 'POST'])
 @login_required
 def comment(id):
     comment_form = CommentForm()
     
-    post= Blog.query.get(id)
-
+    blog= Blog.query.filter_by(id=id).first()
     if comment_form.validate_on_submit():
-        comment = comment_form.comment.data
-        
-        new_comment = Comment(comment=comment,user_id=user_id)
-        new_comment.save_comment()
+        description = comment_form.description.data
+        # user_id = comment_form.user_id.data
+        new_comment = Comment(description=description, blogs_id  = id, user_id=current_user.id)
+        new_comment.save_comments()
         return redirect(url_for('main.index'))
 
-    return render_template('comment.html',comment_form=comment_form)
+    return render_template('comment.html',comment_form=comment_form, blog= blog)
+
+
+
+
+
     
 @main.route('/vote', methods=['POST'])
 def vote():

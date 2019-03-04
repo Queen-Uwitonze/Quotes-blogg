@@ -9,7 +9,7 @@ class BlogForm(FlaskForm):
 
 class CommentForm(FlaskForm):
 
-    comment= TextAreaField('comment', validators=[Required()])
+    description= TextAreaField('comment', validators=[Required()])
     submit = SubmitField('Submit')
 
 class SubscribeForm(FlaskForm):
