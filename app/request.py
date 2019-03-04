@@ -1,19 +1,17 @@
 import urllib.request,json
 from .models import Quote
-from app import app
+# from app import app
 # Getting api key
 # api_key = None
 # Getting the movie base url
 base_url = None
-base_url = app.config['BLOG_API_BASE_URL']
+
 
 def configure_request(app):
    global base_url
-
+   base_url = app.config['BLOG_API_BASE_URL']
 
 def get_quotes():
-
-   print(base_url)
 
    with urllib.request.urlopen(base_url) as url:
        get_quotes_data = url.read()
