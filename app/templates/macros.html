@@ -1,5 +1,5 @@
-{% macro displayBrogList(post_list) %}
-{% for post in post_list %}
+{% macro displayBrogList(blog_list) %}
+{% for blog in blog_list %}
 <div class="col-xs-6 col-sm-6 col-md-6">
     <div class="card m-2">
         <div class="card-header">
@@ -10,7 +10,7 @@
             <p class="card-text">{{quote.quote}}</p>
 
             <hr>
-            <p>Add a comment <a href="/comment/{{post.id}}">here</a>.
+            <p>Add a comment <a href="/comment/{{blog.id}}">here</a>.
                 <p class="card-text">{{comment.description}}</p>
                 <p class="card-text">{{comment.username}}</p>
             </p>

@@ -12,11 +12,11 @@ class Quote:
 
     all_quotes = []
 
-    def __init__(self,id,author,quote,permalink):
+    def __init__(self,id,author,quote):
         self.id =id
         self.author = author
         self.quote = quote
-        self.permalink = "http:\/\/quotes.stormconsultancy.co.uk\/quotes\/38" 
+     
         
     def save_quotes(self):
        Quote.all_quotes.append(self)

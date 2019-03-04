@@ -1,3 +1,10 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+{% block styles%}
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/index.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+{% endblock %}
+
 <div class="container-fluid container">
   <h1>Welcome to the blogging web app, click here to write a blog &nbsp;<a class="btn btn-primary btn md" href="/new_blog">
       New Blog</a></h1>
@@ -8,7 +15,7 @@
   <p>{{quote.quote}}</p>
   <p class="sab">Author: {{quote.author}}</p>
   <br><br>
-  {% for blog in blogs [::-1] %}
+  {% for blog in blogs %}
 
   <div class="container-fluid">
     <div class="card-deck">
