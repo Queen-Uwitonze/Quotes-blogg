@@ -69,7 +69,7 @@ def profile(uname):
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user=user,blog_form=blog_form)
+    return render_template("profile/profile.html", user=user)
 
 @main.route('/new_blog', methods=['GET', 'POST'])
 @login_required
@@ -103,11 +103,6 @@ def comment(id):
 
     return render_template('comment.html',comment_form=comment_form, blog= blog)
 
-
-
-
-
-    
 @main.route('/vote', methods=['POST'])
 def vote():
     data = simplejson.loads(request.data)
@@ -118,16 +113,25 @@ def vote():
 
 @main.route('/subscribe',methods=["GET","POST"])
 def subscribe():
-    subscribe_form=SubscribeForm()
+    form=SubscribeForm()
 
-    if subscribe_form.validate_on_submit():
-        email = subscribe_form.email.data
-        subscriber = Subscribe()
-        db.session.save(email)
+    if form.validate_on_submit():
+        email = form.email.data
+        subscriber = Subscribe(email=form.email.data)
+        db.session.add(subscriber)
         db.session.commit()
 
-        # mail_message("Welcome to my blog","email/welcome_user",subscriber.email,subscriber=subscriber)
+        mail_message=("Welcome to my blog","email/welcome_user",subscriber.email)
         return redirect(url_for('main.index'))
         title = 'Subscribe'
-    return render_template('subscribe.html',subscribe_form=subscribe_form)
+    return render_template('subscribe.html',form=form)
 
+@main.route('/delblog/<id>')
+def delblog(id):
+    
+    blog = Blog.query.filter_by(id = id).first()
+    db.session.delete(blog)
+    db.session.commit()
+    print(blog)
+    title = 'delete blogs'
+    return render_template('index.html',title = title, blog = blog)

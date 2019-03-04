@@ -94,9 +94,7 @@ class Comment(db.Model):
     description= db.Column(db.String(255))
     blogs_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    def __repr__(self):
-        return f'User {self.name}'
-
+    
     def save_comments(self):
        db.session.add(self)
        db.session.commit()
@@ -104,12 +102,13 @@ class Comment(db.Model):
     def delete_comments(self):
        db.session.add(self)
        db.session.commit()
-       
+
     @classmethod
     def get_comments(id):
        comments = Comment.query.all()
        return comments
 
+    
 
 class Subscribe(db.Model):
     __tablename__= 'subscribe'
@@ -120,7 +119,7 @@ class Subscribe(db.Model):
 
     
     def __repr__(self):
-        return f'User {self.name}'
+        return f'User {self.email}'
 
     def save_subscribe(self):
        db.session.add(self)

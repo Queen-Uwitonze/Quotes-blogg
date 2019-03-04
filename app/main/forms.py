@@ -14,7 +14,6 @@ class CommentForm(FlaskForm):
 
 class SubscribeForm(FlaskForm):
     email = StringField('Your Email Address',validators=[Required(),Email()])
-    name =  TextAreaField('add your username', validators=[Required()])
     submit = SubmitField('Submit')
     
     # def validate_email(self,data_field):

@@ -1,26 +1,31 @@
 {% extends 'base.html'%}
 {% import 'bootstrap/wtf.html' as wtf%}
-<!-- Styles block -->
-
+{% block styles%}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Laila" rel="stylesheet">
+{% endblock %}
 {% block content %}
-
-<div class="container-fluid container">
-  <h1>Welcome to the blogging web app, click here to write a blog &nbsp;<a class="btn btn-primary btn md" href="/new_blog">
-      New Blog</a></h1>
-  <a href="/subscribe" style="float:right;">subscribe</a>
-</div>
 <blockquote class="text-center text-lg">
   <h2>Inspirational Quotes</h2>
   <p>{{quote.quote}}</p>
   <p class="sab">Author: {{quote.author}}</p>
   <br><br>
+  <div class="container-fluid container">
+    <h1 style='text-align:center;'>Welcome to my Blogg web App</h1>
+  </div>
+
+
+  <a class="btn btn-primary btn md" href="/new_blog">Add a new Blog</a>
+  <a class="btn btn-primary btn md" href="/subscribe" style="float:center;">subscribe</a>
   {% for blog in all_blogs %}
   <div class="container-fluid">
     <div class="card-deck">
       <div class="card">
         <div class="card-body">
+
           <p>{{blog.blog}}</p>
-          <!-- <a href="/comment{{blog.id}}">View Comments</a> -->
+
         </div>
         <div class="card-header" style='text-align:center;'>
           <h5>{{blog.user}}</h5>
@@ -30,6 +35,7 @@
         <div class="card-footer">
           <div class="container-fluid write">
             <a class="btn btn-primary btn-md" href="/comment/new/{{blog.id}}">Write comment</a>
+            <a class="btn btn-primary btn-md" href="/delblog/{{blog.id}}">Delete comment</a>
 
           </div>
         </div>
