@@ -5,18 +5,15 @@ from ..models import  User,Blog,Comment,Subscribe
 from flask_login import login_required,current_user
 from .. import db,photos
 from ..request import get_quotes
-
+from ..email import mail_message
 
 # Pitch = pitch.Pitch
 
 @main.route('/')
 def index():
-    """ View root page function that returns index page """
-    # # Getting categiries of pitch
-    # pickup_lines = get_movies('pickup lines')
-    # interview_pitch = get_movies('interview pitch')
-    # product_pitch = get_movies('now_playing')
-    # promotion_pitch = get_movies('promotion pitch')
+    """ View root page function that returns index page
+    """
+    
 
     title = 'Home- Welcome'
     all_blogs = Blog.query.all()
@@ -82,7 +79,9 @@ def new_blog():
         # user_id = blog_form.user_id.data
         new_blog = Blog(blog=blog,user_id=current_user.id)
         new_blog.save_blogs() 
-    
+        subscriber=Subscribe.query.all()
+        for subscribe in subscriber:
+            mail_message("New Blog Post","email/welcome_user",subscribe.email, new_blog = new_blog )
         return redirect(url_for('main.index'))
 
     return render_template('new_blog.html', blog_form=blog_form)
@@ -103,26 +102,20 @@ def comment(id):
 
     return render_template('comment.html',comment_form=comment_form, blog= blog)
 
-@main.route('/vote', methods=['POST'])
-def vote():
-    data = simplejson.loads(request.data)
-    update_item(c, [data['member']])
-    output = select_all_items(c, [data['member']])
-    pusher.trigger(u'poll', u'vote', output)
-    return request.data
-
 @main.route('/subscribe',methods=["GET","POST"])
 def subscribe():
     form=SubscribeForm()
 
     if form.validate_on_submit():
         email = form.email.data
-        subscriber = Subscribe(email=form.email.data)
-        db.session.add(subscriber)
+        subscribe = Subscribe(email=form.email.data)
+        db.session.add(subscribe)
         db.session.commit()
 
-        mail_message=("Welcome to my blog","email/welcome_user",subscriber.email,subscriber)
+        
+        mail_message("New Blog Post","email/welcome_user",subscribe.email)
         return redirect(url_for('main.index'))
+
         title = 'Subscribe'
     return render_template('subscribe.html',form=form)
 
