@@ -16,8 +16,8 @@
   </div>
 
 
-  <a class="btn btn-primary btn md" href="/new_blog">Add a new Blog</a>
-  <a class="btn btn-primary btn md" href="/subscribe" style="float:center;">subscribe</a>
+  <a class="btn btn-basic btn md" href="/new_blog">Add a new Blog</a>
+  <a class="btn btn-basic btn md" href="/subscribe" style="float:center;">subscribe</a>
   {% for blog in all_blogs %}
   <div class="container-fluid">
     <div class="card-deck">
@@ -34,8 +34,9 @@
         <br>
         <div class="card-footer">
           <div class="container-fluid write">
-            <a class="btn btn-primary btn-md" href="/comment/new/{{blog.id}}">Write comment</a>
-            <a class="btn btn-primary btn-md" href="/delblog/{{blog.id}}">Delete comment</a>
+            <a class="btn btn-basic btn-md" href="/comment/new/{{blog.id}}">Write comment</a>
+            <p><a class="btn btn-light btn-xl sr-button" href="{{url_for('main.delete_blogs',id = blog.id)}}"> delete
+                blog</a></p>
 
           </div>
         </div>

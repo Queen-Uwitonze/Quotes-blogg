@@ -3,15 +3,19 @@
   margin: 20px;
   padding: 20px;
   border: 20px;
-  background-color:darkkhaki;
+  background-color:beige;
   color: black;
 }
-h3 {
+/* h1 {
   text-align: center;
   font-family: cursive;
   font-size: 20px;
   
-}
+} */
 .container{
-  background-color:darkkhaki;
+  background-color:beige;
+  border: 20px;
+}
+.navbar{
+  color: whitesmoke;
 }
